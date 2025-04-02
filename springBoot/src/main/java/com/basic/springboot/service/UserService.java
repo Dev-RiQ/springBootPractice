@@ -24,15 +24,36 @@ public class UserService {
         return list.stream().map(UserResponseDTO::new).collect(Collectors.toList());
     }
 
-    public UserEntity findUserById(String username) {
-        return userRepository.findById(username).orElse(null);
+    public UserResponseDTO findUserById(String username) throws Exception {
+        return new UserResponseDTO(userRepository.findById(username).orElseThrow());
     }
 
     @Transactional
     public UserEntity saveUser(UserRequestDTO userRequestDTO) throws Exception {
-        if(findUserById(userRequestDTO.getUsername()) != null){
+        if(userRepository.findById(userRequestDTO.getUsername()).isPresent()){
             throw new Exception("Username already exists");
         }
+        if(userRepository.findByEmail(userRequestDTO.getEmail()).isPresent()){
+            throw new Exception("email already exists");
+        }
         return userRepository.save(userRequestDTO.toUserEntity());
+    }
+
+    @Transactional
+    public void updateUser(UserRequestDTO userRequestDTO) throws Exception {
+        if(!userRepository.existsByUsernameAndPassword(userRequestDTO.getUsername(), userRequestDTO.getPassword())){
+            throw new Exception("Username or password does not exist");
+        }
+        UserEntity entity = userRepository.findById(userRequestDTO.getUsername()).orElseThrow();
+        entity.update(userRequestDTO);
+        userRepository.save(entity);
+    }
+
+    @Transactional
+    public void deleteUser(UserRequestDTO userRequestDTO) throws Exception {
+        if(!userRepository.existsByUsernameAndPassword(userRequestDTO.getUsername(), userRequestDTO.getPassword())){
+            throw new Exception("Username or password does not exist");
+        }
+        userRepository.deleteById(userRequestDTO.getUsername());
     }
 }

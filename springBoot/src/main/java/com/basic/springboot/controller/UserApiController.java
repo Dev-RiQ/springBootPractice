@@ -27,6 +27,22 @@ public class UserApiController {
         return new ResponseEntity<>(users,HttpStatus.OK);
     }
 
+    @GetMapping("/{username}")
+    public ResponseEntity<Map<String, Object>> getUser(@PathVariable String username){
+        log.trace("get user : {}",username);
+        Map<String,Object> response = new HashMap<>();
+        try {
+            UserResponseDTO user = userService.findUserById(username);
+            response.put("status",HttpStatus.OK.value());
+            response.put("data",user);
+            return ResponseEntity.ok(response);
+        }catch (Exception e){
+            response.put("status",HttpStatus.NOT_FOUND.value());
+            response.put("message","user not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+    }
+
     @PostMapping({"","/"})
     public ResponseEntity<Map<String, Object>> addOneUser(@RequestBody UserRequestDTO userRequestDTO) {
         log.info("addOneUser: userRequestDTO: {}", userRequestDTO);
@@ -37,9 +53,41 @@ public class UserApiController {
             response.put("message","user created successfully");
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            response.put("status",HttpStatus.NOT_FOUND.value());
-            response.put("message","user not found");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            response.put("status",HttpStatus.BAD_REQUEST.value());
+            response.put("message",e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
+    @PutMapping({"","/"})
+    public ResponseEntity<Map<String, Object>> updateUser(@ModelAttribute UserRequestDTO userRequestDTO) {
+        log.info("updateUser: userRequestDTO: {}", userRequestDTO);
+        Map<String, Object> response = new HashMap<>();
+        try {
+            userService.updateUser(userRequestDTO);
+            response.put("status",HttpStatus.OK.value());
+            response.put("message","user updated successfully");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("status",HttpStatus.BAD_REQUEST.value());
+            response.put("message",e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
+    @DeleteMapping({"","/"})
+    public ResponseEntity<Map<String, Object>> deleteUser(@ModelAttribute UserRequestDTO userRequestDTO) {
+        log.info("deleteUser: userRequestDTO: {}", userRequestDTO);
+        Map<String, Object> response = new HashMap<>();
+        try {
+            userService.deleteUser(userRequestDTO);
+            response.put("status",HttpStatus.OK.value());
+            response.put("message","user deleted successfully");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("status",HttpStatus.BAD_REQUEST.value());
+            response.put("message",e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
 }
