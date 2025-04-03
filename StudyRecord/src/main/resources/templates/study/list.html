@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+    <tr th:each="study :${studys}">
+        <td th:text="${study.getMemberId()}"></td>
+        <td th:text="${study.getContents()}"></td>
+        <td th:text="${study.getStartDate()}"></td>
+        <td th:text="${study.getStartTime()}"></td>
+        <td th:text="${study.getStudyMins()}"></td>
+        <td th:text="${study.getEndDateTime()}"></td>
+    </tr>
+</table>
+</body>
+</html>
