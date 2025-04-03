@@ -2,6 +2,7 @@ package com.basic.springboot.controller;
 
 import com.basic.springboot.domain.request.UserRequestDTO;
 import com.basic.springboot.domain.response.UserResponseDTO;
+import com.basic.springboot.repository.UserSummary;
 import com.basic.springboot.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -89,5 +90,10 @@ public class UserApiController {
             response.put("message",e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
+    }
+
+    @GetMapping("/summary")
+    public List<UserSummary> getUserSummary(){
+        return userService.findAllUserSummary();
     }
 }

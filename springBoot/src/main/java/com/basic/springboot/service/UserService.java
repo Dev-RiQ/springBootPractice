@@ -4,6 +4,7 @@ import com.basic.springboot.domain.UserEntity;
 import com.basic.springboot.domain.request.UserRequestDTO;
 import com.basic.springboot.domain.response.UserResponseDTO;
 import com.basic.springboot.repository.UserRepository;
+import com.basic.springboot.repository.UserSummary;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,5 +56,9 @@ public class UserService {
             throw new Exception("Username or password does not exist");
         }
         userRepository.deleteById(userRequestDTO.getUsername());
+    }
+
+    public List<UserSummary> findAllUserSummary(){
+        return userRepository.findBy();
     }
 }
