@@ -1,16 +1,48 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header}">
 <body>
-<table>
-    <tr th:each="member :${members}">
-        <td th:text="${member.getLoginId()}"></td>
-        <td th:text="${member.getName()}"></td>
-        <td th:text="${member.getRole()}"></td>
-    </tr>
-</table>
+
+
+<div th:replace="~{fragments/bodyHeader :: bodyHeader}"></div>
+
+<section>
+    <div class="error" th:if="${not #strings.isEmpty(msg)}" ><strong th:text="${msg}"></strong> </div>
+    <form th:action="${member ne null ? '/member/update/' + member.id : '/member'}" method="post">
+        <table class="sm_table">
+            <thead>
+            <th colspan="2" class="center"> 회원 <span th:text="${member ne null ? '수정' : '추가'}"></span> </th>
+            </thead>
+            <tr>
+                <th><label for="loginId">ID </label></th>
+                <td>
+                    <input type="text" id="loginId" name="loginId" th:value="${member ne null ? member.loginId : ''}" required placeholder="ID을 입력하세요"/>
+
+                </td>
+            </tr>
+            <tr>
+                <th><label for="password">PW</label></th>
+                <td>
+                    <input type="text" id="password" name="password" th:value="${member ne null ? member.password : ''}" required placeholder="PW을 입력하세요"/>
+                </td>
+            </tr>
+
+            <tr>
+                <th><label for="name">Name</label></th>
+                <td>
+                    <input type="text" id="name" name="name" th:value="${member ne null ? member.name : ''}" required placeholder="name을 입력하세요"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="center">
+                    <button class="btn btn-submit btn-big" type="submit" th:text="${member ne null? '수정' : '등록'}"></button>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+</section>
+<div th:replace="~{fragments/footer :: footer}"></div>
+
 </body>
 </html>

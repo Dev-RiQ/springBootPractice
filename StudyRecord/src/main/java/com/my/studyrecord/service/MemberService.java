@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -16,11 +17,15 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public List<Member> findAll(){
-        return memberRepository.findAll();
+    public List<Member> findAll() throws NoSuchElementException{
+        List<Member> members = memberRepository.findAll();
+        if(members.isEmpty()){
+            throw new NoSuchElementException();
+        }
+        return members;
     }
 
-    public Member findMemberById(Long id) throws Exception {
+    public Member findMemberById(Long id) throws NoSuchElementException {
         return memberRepository.findById(id).orElseThrow();
     }
 
@@ -30,14 +35,14 @@ public class MemberService {
     }
 
     @Transactional
-    public void update(Long id, UpdateMemberRequest request) {
+    public void update(Long id, UpdateMemberRequest request) throws NoSuchElementException {
         Member member = memberRepository.findById(id).orElseThrow();
         member.update(request);
         memberRepository.save(member);
     }
 
     @Transactional
-    public void delete(Long id) {
+    public void delete(Long id) throws NoSuchElementException {
         Member member = memberRepository.findById(id).orElseThrow();
         memberRepository.delete(member);
     }

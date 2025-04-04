@@ -7,15 +7,20 @@ import com.my.studyrecord.controller.request.UpdateStudyRequest;
 import com.my.studyrecord.controller.response.StudyViewResponse;
 import com.my.studyrecord.domain.Member;
 import com.my.studyrecord.domain.Study;
+import com.my.studyrecord.service.MemberService;
 import com.my.studyrecord.service.StudyService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
+@Slf4j
 @Controller
 @RequestMapping("/study")
 @RequiredArgsConstructor
@@ -26,19 +31,24 @@ public class StudyController {
     @GetMapping({"","/{id}"})
     public String study(@PathVariable(required = false) Long id, Model model) {
         try{
+            model.addAttribute("curDate", LocalDate.now());
             Study study = studyService.findStudyById(id);
             model.addAttribute("study", study);
         } catch (Exception e) {
+            log.error(e.getMessage());
         }
         return "study/join";
     }
 
-    @GetMapping("/list")
-    public String list(Model model) {
-
-        List<Study> list = studyService.findAll();
-        List<StudyViewResponse> viewList = list.stream().map(StudyViewResponse::new).toList();
-        model.addAttribute("studys", viewList);
+    @GetMapping({"/list","/list/{memberId}"})
+    public String list(@PathVariable(required = false) Long memberId, Model model) {
+        try{
+            List<Study> list = memberId == null ? studyService.findAll() : studyService.findAllByMemberId(memberId);
+            List<StudyViewResponse> viewList = list.stream().map(StudyViewResponse::new).toList();
+            model.addAttribute("studys", viewList);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
         return "study/list";
     }
 
@@ -47,25 +57,28 @@ public class StudyController {
         try{
             studyService.insert(request.getMemberId(), new AddStudyRequest().toEntity(request));
         } catch (Exception e) {
+            log.error(e.getMessage());
         }
         return "redirect:/study/list";
     }
 
-    @PutMapping("/{id}")
+    @PostMapping("/update/{id}")
     public String update(@PathVariable Long id, UpdateStudyRequest request) {
         try{
             studyService.update(id, request);
         } catch (Exception e) {
+            log.error(e.getMessage());
         }
         return "redirect:/study/list";
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         try{
             studyService.delete(id);
         } catch (Exception e) {
+            log.error(e.getMessage());
         }
-        return "redirect:/study/list";
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

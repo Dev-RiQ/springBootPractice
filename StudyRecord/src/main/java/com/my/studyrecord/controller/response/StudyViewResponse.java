@@ -17,7 +17,7 @@ public class StudyViewResponse {
     private LocalTime startTime;
     private int studyMins;
     private String contents;
-    private Long memberId;
+    private String memberName;
     private String endDateTime;
 
     public StudyViewResponse (Study study) {
@@ -26,7 +26,7 @@ public class StudyViewResponse {
         this.startTime = study.getStartTime();
         this.studyMins = study.getStudyMins();
         this.contents = study.getContents();
-        this.memberId = study.getMember().getId();
+        this.memberName = study.getMember().getName();
         this.endDateTime = study.getEndStudyDay();
     }
 }
