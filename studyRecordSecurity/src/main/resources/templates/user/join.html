@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header}">
+<body>
+
+
+<div th:replace="~{fragments/bodyHeader :: bodyHeader}"></div>
+
+<section>
+    <div class="error" th:if="${not #strings.isEmpty(msg)}" ><strong th:text="${msg}"></strong> </div>
+    <form th:action="${user ne null ? '/user/update/' + user.id : '/user'}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <table class="sm_table">
+            <thead>
+            <th colspan="2" class="center"> 회원 <span th:text="${user ne null ? '수정' : '추가'}"></span> </th>
+            </thead>
+            <tr>
+                <th><label for="username">ID </label></th>
+                <td>
+                    <input type="text" id="username" name="username" th:value="${user ne null ? user.loginId : ''}" th:if="${user ne null ? 'readonly' : ''}" required placeholder="ID을 입력하세요"/>
+
+                </td>
+            </tr>
+            <tr>
+                <th><label for="password">PW</label></th>
+                <td>
+                    <input type="password" id="password" name="password" th:value="${user ne null ? user.password : ''}" required placeholder="PW을 입력하세요"/>
+                </td>
+            </tr>
+
+            <tr>
+                <th><label for="name">Name</label></th>
+                <td>
+                    <input type="text" id="name" name="name" th:value="${user ne null ? user.name : ''}" required placeholder="name을 입력하세요"/>
+                </td>
+            </tr>
+
+            <tr>
+                <th><label for="email">Email</label></th>
+                <td>
+                    <input type="text" id="email" name="email" th:value="${user ne null ? user.email : ''}" th:if="${user ne null ? 'readonly' : ''}" required placeholder="email을 입력하세요"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="center">
+                    <button class="btn btn-submit btn-big" type="submit" th:text="${user ne null? '수정' : '등록'}"></button>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+</section>
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>

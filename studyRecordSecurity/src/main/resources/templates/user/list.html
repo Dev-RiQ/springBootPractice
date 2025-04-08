@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header}">
+<body>
+<div th:replace="~{fragments/bodyHeader :: bodyHeader}"></div>
+
+<section>
+    <table>
+
+        <tr>
+            <th>아이디</th>
+            <th>이름</th>
+            <th>권한</th>
+            <th>회원수정</th>
+            <th>회원삭제</th>
+        </tr>
+
+        <th:block th:each="user :${users}">
+            <tr>
+                <td id="loginId" th:text="${user.loginId}">admin</td>
+                <td th:text="${user.name}">관리자</td>
+                <td th:text="${user.role}">ADMIN</td>
+                <td>
+                    <a class="link btn btn-delete" th:href="@{/templates/user/{id}(id=${user.id})}">수정 </a>
+                </td>
+                <td>
+                    <button class="btn btn-delete" th:data-id="${user.id}" >삭제 ajax</button>
+                </td>
+            </tr>
+        </th:block>
+    </table>
+</section>
+<div th:replace="~{fragments/footer :: footer}"> </div>
+</body>
+</html>
+
+<script defer src="/js/user.js"> </script>
