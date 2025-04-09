@@ -39,6 +39,7 @@ public class UserController {
     @GetMapping({"","/{id}"})
     public String user(@PathVariable(required = false) Long id, Model model) {
         try{
+            if(id == null){return "user/join";}
             User user = userService.findUserById(id);
             model.addAttribute("user", user);
         } catch (Exception e) {
@@ -53,6 +54,9 @@ public class UserController {
             List<User> users = userService.findAll();
             List<UserViewResponse> userViewResponses = users.stream().map(UserViewResponse::new).toList();
             model.addAttribute("users",userViewResponses);
+            User loginUser = userService.getLoginUser();
+            model.addAttribute("userId",loginUser.getId());
+            model.addAttribute("userRole",loginUser.getRole().toString());
         }catch (Exception e) {
             log.error(e.getMessage());
         }

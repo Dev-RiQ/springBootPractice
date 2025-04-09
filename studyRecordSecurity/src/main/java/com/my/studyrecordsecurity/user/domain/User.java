@@ -1,6 +1,6 @@
 package com.my.studyrecordsecurity.user.domain;
 
-import com.my.studyrecordsecurity.security.userSecurity.domain.UserPasswordEncoder;
+import com.my.studyrecordsecurity.security.userSecurity.dto.UserPasswordEncoder;
 import com.my.studyrecordsecurity.user.controller.request.UpdateUserRequest;
 import jakarta.persistence.*;
 import lombok.Builder;

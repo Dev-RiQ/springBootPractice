@@ -1,4 +1,4 @@
-package com.my.studyrecordsecurity.security.userSecurity.domain;
+package com.my.studyrecordsecurity.security.userSecurity.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.ToString;

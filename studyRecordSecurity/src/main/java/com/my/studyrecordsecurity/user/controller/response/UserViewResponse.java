@@ -15,7 +15,7 @@ public class UserViewResponse {
     public UserViewResponse(User user) {
         this.id = user.getId();
         this.username = user.getUsername();
-        this.name = user.getUsername();
+        this.name = user.getName();
         this.role = user.getRole().toString();
     }
 }

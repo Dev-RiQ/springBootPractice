@@ -1,4 +1,4 @@
-package com.my.studyrecordsecurity.security.userSecurity.domain;
+package com.my.studyrecordsecurity.security.userSecurity.dto;
 
 public interface OAuth2Response {
     String getProvider();

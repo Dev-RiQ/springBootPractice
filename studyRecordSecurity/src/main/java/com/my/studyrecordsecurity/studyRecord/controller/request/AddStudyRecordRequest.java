@@ -16,7 +16,6 @@ public class AddStudyRecordRequest {
     private LocalTime startTime;
     private int studyMins;
     private String contents;
-    private Long memberId;
 
     public StudyRecord toEntity(AddStudyRecordRequest dto){
         return StudyRecord.builder()

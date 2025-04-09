@@ -15,6 +15,7 @@ public class StudyRecordViewResponse {
     private LocalTime startTime;
     private int studyMins;
     private String contents;
+    private Long userId;
     private String userName;
     private String endDateTime;
 
@@ -24,7 +25,8 @@ public class StudyRecordViewResponse {
         this.startTime = studyRecord.getStartTime();
         this.studyMins = studyRecord.getStudyMins();
         this.contents = studyRecord.getContents();
-        this.userName = studyRecord.getUser().getUsername();
+        this.userId = studyRecord.getUser().getId();
+        this.userName = studyRecord.getUser().getName();
         this.endDateTime = studyRecord.getEndStudyDay();
     }
 }

@@ -47,9 +47,8 @@ public class SecurityConfig {
 
 //        http
 //                .csrf(AbstractHttpConfigurer::disable);
-        // 직접 로그인 구현 x
-        http
-                .formLogin(AbstractHttpConfigurer::disable);
+//        http
+//                .formLogin(AbstractHttpConfigurer::disable);
         // formLogin disable 시 자동 popup 되는 것 해제
         http
                 .httpBasic(AbstractHttpConfigurer::disable);
@@ -60,6 +59,7 @@ public class SecurityConfig {
                 .formLogin(form->{
                             form.loginPage("/login")
                                     .loginProcessingUrl("/login")
+                                    .failureUrl("/login?error")
                                     .defaultSuccessUrl("/", true)
                                     .permitAll();
 
@@ -75,7 +75,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((auth) -> {
                     auth
-                            .requestMatchers("/","/oauth2/**", "/login", "/sign-up", "/user", "/user/", "/user/login").permitAll()
+                            .requestMatchers("/","/oauth","/oauth2/**", "/login","/login?error", "/sign-up", "/user", "/user/").permitAll()
                             .anyRequest().authenticated();
                 });
         http

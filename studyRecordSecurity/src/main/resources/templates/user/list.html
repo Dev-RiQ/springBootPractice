@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="~{fragments/header :: header}">
 <body>
 <div th:replace="~{fragments/bodyHeader :: bodyHeader}"></div>
@@ -17,14 +17,14 @@
 
         <th:block th:each="user :${users}">
             <tr>
-                <td id="loginId" th:text="${user.loginId}">admin</td>
-                <td th:text="${user.name}">관리자</td>
+                <td id="loginId"><a th:href="@{/study/list/{id}(id=${user.id})}" th:text="${user.username}">admin</a></td>
+                <td><a th:href="@{/study/list/{id}(id=${user.id})}" th:text="${user.name}">관리자</a></td>
                 <td th:text="${user.role}">ADMIN</td>
                 <td>
-                    <a class="link btn btn-delete" th:href="@{/templates/user/{id}(id=${user.id})}">수정 </a>
+                    <a th:if="${user.id eq userId || userRole eq 'ROLE_ADMIN'}" class="link btn btn-delete" th:href="@{/user/{id}(id=${user.id})}">수정 </a>
                 </td>
                 <td>
-                    <button class="btn btn-delete" th:data-id="${user.id}" >삭제 ajax</button>
+                    <button th:if="${user.id eq userId || userRole eq 'ROLE_ADMIN'}" class="btn btn-delete" th:data-id="${user.id}" >삭제 ajax</button>
                 </td>
             </tr>
         </th:block>

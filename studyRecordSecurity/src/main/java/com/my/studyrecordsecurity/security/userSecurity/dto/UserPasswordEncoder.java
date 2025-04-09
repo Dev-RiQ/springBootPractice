@@ -1,4 +1,4 @@
-package com.my.studyrecordsecurity.security.userSecurity.domain;
+package com.my.studyrecordsecurity.security.userSecurity.dto;
 
 import lombok.Getter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

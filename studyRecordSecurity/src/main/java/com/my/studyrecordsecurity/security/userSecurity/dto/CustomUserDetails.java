@@ -1,19 +1,17 @@
-package com.my.studyrecordsecurity.security.userSecurity.domain;
+package com.my.studyrecordsecurity.security.userSecurity.dto;
 
-import com.my.studyrecordsecurity.user.domain.Role;
 import com.my.studyrecordsecurity.user.domain.User;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 
 @RequiredArgsConstructor
+@Getter
 @ToString
 public class CustomUserDetails implements UserDetails {
 

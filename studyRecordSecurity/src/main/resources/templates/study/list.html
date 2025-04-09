@@ -33,8 +33,8 @@
             <td th:text="|${study.studyMins}분| ">30분</td>
             <td th:text="${study.endDateTime}"> 2025-04-03 / 10:30:00</td>
             <td th:text="${study.contents}">내용</td>
-            <td><a th:href="@{/study/{id}(id=${study.id})}" class="link btn btn-modify">수정</a></td>
-            <td><button th:onclick="|deleteRecord(${study.id})|" class="btn btn-delete">삭제</button></td>
+            <td><a th:if="${study.userId eq userId || userRole eq 'ROLE_ADMIN'}" th:href="@{/study/{id}(id=${study.id})}" class="link btn btn-modify">수정</a></td>
+            <td><button th:if="${study.userId eq userId || userRole eq 'ROLE_ADMIN'}" th:onclick="|deleteRecord(${study.id})|" class="btn btn-delete">삭제</button></td>
         </tr>
         </tbody>
 

@@ -5,6 +5,7 @@ import com.my.studyrecordsecurity.studyRecord.domain.StudyRecord;
 import com.my.studyrecordsecurity.studyRecord.repository.StudyRecordRepository;
 import com.my.studyrecordsecurity.user.domain.User;
 import com.my.studyrecordsecurity.user.repository.UserRepository;
+import com.my.studyrecordsecurity.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,7 @@ public class StudyRecordService {
 
     private final UserRepository userRepository;
     private final StudyRecordRepository studyRecordRepository;
+    private final UserService userService;
 
     public List<StudyRecord> findAll() {
         List<StudyRecord> studies = studyRecordRepository.findAll();
@@ -48,8 +50,8 @@ public class StudyRecordService {
         studyRecordRepository.deleteAllByUserId(id);
     }
     @Transactional
-    public void insert(Long userId, StudyRecord entity) throws NoSuchElementException {
-        User user = userRepository.findById(userId).orElseThrow();
+    public void insert(StudyRecord entity) throws NoSuchElementException {
+        User user = userService.getLoginUser();
         entity.setUser(user);
         studyRecordRepository.save(entity);
     }
@@ -64,4 +66,5 @@ public class StudyRecordService {
         StudyRecord studyRecord = studyRecordRepository.findById(id).orElseThrow();
         studyRecordRepository.delete(studyRecord);
     }
+
 }

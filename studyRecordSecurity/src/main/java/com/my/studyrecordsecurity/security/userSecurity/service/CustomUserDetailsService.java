@@ -1,7 +1,6 @@
 package com.my.studyrecordsecurity.security.userSecurity.service;
 
-import com.my.studyrecordsecurity.security.userSecurity.domain.CustomUserDetails;
-import com.my.studyrecordsecurity.security.userSecurity.domain.CustomUserOAuth2Details;
+import com.my.studyrecordsecurity.security.userSecurity.dto.CustomUserDetails;
 import com.my.studyrecordsecurity.user.domain.User;
 import com.my.studyrecordsecurity.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

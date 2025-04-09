@@ -55,3 +55,11 @@
 .naver-btn {
     background-color: #03C75A;
 }
+
+.login-fail-btn{
+    width: 100%;
+    cursor: default;
+    background-color: darkgray;
+    padding: 10px;
+    margin-bottom: 10px;
+}

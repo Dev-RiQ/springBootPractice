@@ -1,11 +1,13 @@
 package com.my.studyrecordsecurity.user.service;
 
-import com.my.studyrecordsecurity.user.controller.request.LoginUserRequest;
+import com.my.studyrecordsecurity.security.userSecurity.dto.CustomUserDetails;
+import com.my.studyrecordsecurity.security.userSecurity.dto.CustomUserOAuth2Details;
+import com.my.studyrecordsecurity.security.userSecurity.dto.OAuth2Response;
 import com.my.studyrecordsecurity.user.controller.request.UpdateUserRequest;
 import com.my.studyrecordsecurity.user.domain.User;
 import com.my.studyrecordsecurity.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,6 +49,21 @@ public class UserService {
     public void delete(Long id) throws NoSuchElementException {
         User user = userRepository.findById(id).orElseThrow();
         userRepository.delete(user);
+    }
+
+    public User getLoginUser() {
+        User user;
+        try{
+            OAuth2Response oAuth2Response = ((CustomUserOAuth2Details) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getOAuth2Response();
+            user = (User) userRepository.findByUsernameAndEmailAndName(
+                    oAuth2Response.getProviderId(),
+                    oAuth2Response.getEmail(),
+                    oAuth2Response.getName()
+            ).orElseThrow();
+        }catch (Exception e){
+            user = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+        }
+        return user;
     }
 }
 

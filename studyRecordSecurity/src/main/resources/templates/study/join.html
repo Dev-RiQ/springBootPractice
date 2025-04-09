@@ -32,7 +32,6 @@
             <tr>
                 <td colspan="2" class="center">
                     <input type="hidden" name="id" th:value="${study ne null ? study.id : ''}" >
-                    <input type="hidden" name="memberId" th:value="${study ne null ? study.user.id : '2'}">
                     <button class="btn btn-modify btn-big" type="submit" th:text="${study ne null ? '수정' : '추가'}"></button>
                 </td>
             </tr>

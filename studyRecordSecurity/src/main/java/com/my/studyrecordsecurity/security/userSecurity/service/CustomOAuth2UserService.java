@@ -1,6 +1,6 @@
 package com.my.studyrecordsecurity.security.userSecurity.service;
 
-import com.my.studyrecordsecurity.security.userSecurity.domain.*;
+import com.my.studyrecordsecurity.security.userSecurity.dto.*;
 import com.my.studyrecordsecurity.user.domain.Role;
 import com.my.studyrecordsecurity.user.domain.Type;
 import com.my.studyrecordsecurity.user.domain.User;
